@@ -129,15 +129,14 @@ const App = (props) => {
                 />
 
                 {/* Admin Control Panel */}
-                <Route path="AdminCP/*" element={<AdminCP />} />
-                {/* <Route
+                <Route
                     path="AdminCP/*"
                     element={
                         <SecuredRoute user={user} permission="route.admin">
                             <Admin />
                         </SecuredRoute>
                     }
-                /> */}
+                />
             </Routes>
         </div>
     );
