@@ -46,6 +46,28 @@ class JobHelper {
         });
     };
 
+    static UpdateJob = async (req, res, next) => {
+        await db.Job.update({
+            title: req.body.title,
+            description: req.body.description,
+            salary: req.body.salary,
+            datePosted: new Date(req.body.datePosted),
+            closingDate: new Date(req.body.closingDate)}, 
+        {
+            where: {
+                [Op.and]: [
+                    { id: req.params.jobId }
+                ]
+            }
+        })
+        .then(job => {
+            return res.send({ message: "Job updated"});
+        })
+        .catch(err => {
+            return res.status(500).send({ message: err.message });
+        });
+    };
+
     static AddJobProperty = async (req, res, next) => {
         await db.JobProperty.create({
             title: req.body.title,

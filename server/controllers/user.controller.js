@@ -4,12 +4,15 @@ const express = require('express')
 const db = require("../models");
 const UserHelper = require("../utils/UserHelper");
 const { Op } = require("sequelize");
+const bcrypt = require("bcryptjs");
 
 const router = express.Router();
 
 // Get list of user
 router.get('/', async (req, res) => {
-    var users = await db.User.findAll();
+    var users = await db.User.findAll({
+        attributes: {exclude: ['Password']}
+    });
     res.send(JSON.stringify(users, null, 2));
 });
 
@@ -18,7 +21,8 @@ router.get('/detail/:id', async (req, res) => {
     db.User.findByPk(req.params.id, {
         include: [
             db.UserProperty
-        ]
+        ],
+        attributes: {exclude: ['Password']}
     })
     .then(user => {
         if(user)
@@ -65,9 +69,7 @@ router.post('/create', UserHelper.GetUser, UserHelper.CreateUser);
 router.put('/edit/:id', UserHelper.GetUserById, UserHelper.ValidateUser, async (req, res) => {
     const user = req.user;
     db.User.update({
-        UserName: user.userName,
-        Email: user.email,
-        Password: bcrypt.hashSync(user.password, 8),
+        Password: bcrypt.hashSync(req.body.password, 8),
         LastActivyDate: Date.now()
     }, {
         where: {

@@ -16,8 +16,8 @@ const STATUS = {
 //Create a notification
 router.post("/create", async(req, res, next) => {
 	await db.Notification.create({
-		RecipientId: req.query.recipientId,
-		SenderId: req.query.senderId,
+		RecipientId: req.body.recipientId,
+		SenderId: req.body.senderId,
 		Status: STATUS.UNREAD,
 		Content: req.body.content
 	})

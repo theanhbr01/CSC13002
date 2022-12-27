@@ -40,6 +40,15 @@ router.get('/all', async (req, res, next) => {
     res.send(JSON.stringify(articles, null, 2));
 })
 
+// Get detail
+router.get('/detail/:id', async (req, res) => {
+    var article = await db.Article.findByPk(req.params.id);
+    if(article)
+        res.send(JSON.stringify(article, null, 2));
+    else
+        res.status(404).send({message: "Article Not Found"});
+});
+
 //Get all articleId of a userId
 router.get("/", async (req, res, next) => {
     let articles = "";

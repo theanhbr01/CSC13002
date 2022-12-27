@@ -34,10 +34,12 @@ router.get('/detail/:id', async (req, res) => {
 // Get list by user
 router.get('/user/:id', async (req, res) => {
     var roles = await db.Role.findAll({
-            include: UserRole,
-            where: {
-                '$UserRole.UserId$': req.params.id
-            }
+            include: [{
+                model: db.User,
+                where: {
+                    id:  req.params.id
+                }
+            }]
         });
 
     if(roles)

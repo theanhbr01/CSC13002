@@ -71,6 +71,8 @@ router.get("/:authorId/getJobs",
 
 router.put("/edit", AuthencationHelper.VerifyToken, JobHelper.EditJob);
 
+router.put("/edit/:jobId", AuthencationHelper.VerifyToken, JobHelper.UpdateJob);
+
 router.post("/:jobId/newProperty", 
 	async (req, res, next) => {
 		req.jobId = req.params.jobId;

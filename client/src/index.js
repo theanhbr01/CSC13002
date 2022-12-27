@@ -25,6 +25,7 @@ import AuthApi from "./api/AuthApi";
 import AuthVerify from "./common/AuthVerify";
 import SecuredRoute, { checkUserPermission } from "./components/SecuredRoute";
 import { data } from "jquery";
+import AdminCP from "./AdminCP";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -128,7 +129,15 @@ const App = (props) => {
                 />
 
                 {/* Admin Control Panel */}
-                <Route path="AdminCP/*" element={<Admin />} />
+                <Route path="AdminCP/*" element={<AdminCP />} />
+                {/* <Route
+                    path="AdminCP/*"
+                    element={
+                        <SecuredRoute user={user} permission="route.admin">
+                            <Admin />
+                        </SecuredRoute>
+                    }
+                /> */}
             </Routes>
         </div>
     );
